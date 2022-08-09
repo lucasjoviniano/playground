@@ -1,5 +1,9 @@
 use std::collections::HashSet;
 
+fn longest_codewars(a1: &str, a2: &str) -> String {
+    format!("{}{}", a1, a2).chars().sorted().dedup().collect()
+}
+
 fn longest(a1: &str, a2: &str) -> String {
     let mut set = HashSet::new();
     let str1 = a1.chars().collect::<Vec<char>>();

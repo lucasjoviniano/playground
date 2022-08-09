@@ -1,7 +1,7 @@
 fn to_alternating_case(s: &str) -> String {
     s
         .chars()
-        .map(|c| if c.is_lowercase() { return c.to_uppercase().to_string() } else { return c.to_lowercase().to_string() })
+        .map(|c| if c.is_lowercase() { return c.to_uppercase().to_string() } else { return c.to_lowercase().to_string() })]
         .collect()
 }
 
