@@ -1,4 +1,7 @@
-use std::{sync::{Mutex, Arc}, thread, time};
+use std::{
+    sync::{Arc, Mutex},
+    thread, time,
+};
 
 struct Table {
     forks: Vec<Mutex<()>>,
@@ -12,7 +15,11 @@ struct Philosopher {
 
 impl Philosopher {
     fn new(name: &str, left: usize, right: usize) -> Philosopher {
-        Philosopher { name: name.to_string(), left, right }
+        Philosopher {
+            name: name.to_string(),
+            left,
+            right,
+        }
     }
 
     fn eat(&self, table: &Table) {
@@ -29,13 +36,15 @@ impl Philosopher {
 }
 
 fn main() {
-    let table = Arc::new(Table {forks: vec![
-        Mutex::new(()),
-        Mutex::new(()),
-        Mutex::new(()),
-        Mutex::new(()),
-        Mutex::new(()),
-    ]});
+    let table = Arc::new(Table {
+        forks: vec![
+            Mutex::new(()),
+            Mutex::new(()),
+            Mutex::new(()),
+            Mutex::new(()),
+            Mutex::new(()),
+        ],
+    });
 
     let philos = vec![
         Philosopher::new("Immanuel Kant", 0, 1),
@@ -45,13 +54,16 @@ fn main() {
         Philosopher::new("Hannah Arendt", 0, 4),
     ];
 
-    let handles: Vec<_> = philos.into_iter().map(|philo| {
-        let table = table.clone();
+    let handles: Vec<_> = philos
+        .into_iter()
+        .map(|philo| {
+            let table = table.clone();
 
-        thread::spawn(move || {
-            philo.eat(&table);
+            thread::spawn(move || {
+                philo.eat(&table);
+            })
         })
-    }).collect();
+        .collect();
 
     for handle in handles {
         handle.join().unwrap();
